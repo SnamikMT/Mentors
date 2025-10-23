@@ -1,0 +1,22 @@
+
+.scrollbar-clean {
+  scrollbar-width: thin;
+  scrollbar-color: #f3f0f0 transparent;
+}
+
+.scrollbar-clean::-webkit-scrollbar {
+  width: 4px;
+  background: transparent !important;
+}
+
+.scrollbar-clean::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.scrollbar-clean::-webkit-scrollbar-thumb {
+  background-color: #ffffff !important;
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  height: 96px;
+}
