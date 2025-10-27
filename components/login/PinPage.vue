@@ -1,18 +1,26 @@
 <template>
-  <div class="relative max-w-[1440px] h-[900px] w-full mx-auto px-32 py-6 bg-white overflow-hidden font-geist">
-    <div class="relative z-10 flex flex-col justify-between items-start h-full">
-      <img :src="logo" alt="logo" class="w-20 h-8" />
+  <div class="min-h-screen w-full bg-white overflow-hidden font-geist flex flex-col">
+    <!-- header -->
+    <header class="w-full px-6 sm:px-10 lg:px-32 py-6">
+      <img :src="logo" alt="logo" class="w-16 sm:w-20 h-6 sm:h-8" />
+    </header>
 
-      <div class="flex flex-col gap-12 mt-16">
-        <div class="flex flex-col gap-2">
-          <h1 class="text-[48px] leading-[64px] font-medium text-[#020203]">А теперь введи код</h1>
+    <!-- main -->
+    <main class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0 items-start">
+      <!-- контент -->
+      <section class="px-6 sm:px-10 lg:px-32 pb-8 flex flex-col gap-8">
+        <div class="flex flex-col gap-3 mt-2 sm:mt-6">
+          <h1 class="text-[28px] leading-[36px] sm:text-[40px] sm:leading-[52px] lg:text-[48px] lg:leading-[64px] font-medium text-[#020203]">
+            А теперь введи код
+          </h1>
           <p class="text-base leading-relaxed text-[#020203]">
             Мы прислали его на почту
-            <span class="font-normal underline">{{ emailText }}</span>
+            <span class="underline">{{ emailText }}</span>
           </p>
         </div>
 
-        <div class="flex gap-3">
+        <!-- PIN -->
+        <div class="flex gap-2 sm:gap-3">
           <PinDigit
             v-for="(_, index) in pin"
             :key="index"
@@ -25,26 +33,32 @@
           />
         </div>
 
-        <div class="w-96 p-4 bg-gray-100 rounded-2xl flex justify-center items-center">
-          <span class="text-base font-medium text-gray-500">
+        <!-- таймер -->
+        <div class="w-full max-w-md p-3 sm:p-4 bg-gray-100 rounded-2xl flex justify-center items-center">
+          <span class="text-sm sm:text-base font-medium text-gray-500">
             Новый код через {{ seconds }} сек
           </span>
         </div>
-      </div>
 
-      <button
-        class="w-96 mt-auto p-4 bg-gray-100 rounded-2xl flex justify-center items-center"
-        @click="goBack"
-      >
-        <span class="text-base font-medium text-black">Попробовать другую почту</span>
-      </button>
-    </div>
+        <!-- другая почта -->
+        <button
+          class="w-full max-w-md mt-auto p-3 sm:p-4 bg-gray-100 rounded-2xl flex justify-center items-center hover:bg-gray-200 transition"
+          @click="goBack"
+        >
+          <span class="text-base font-medium text-black">Попробовать другую почту</span>
+        </button>
+      </section>
 
-    <img
-      :src="image"
-      alt="illustration"
-      class="absolute top-[340px] right-0 left-[500px] w-[800px] h-auto object-fit z-[999] pointer-events-none select-none"
-    />
+      <!-- иллюстрация -->
+      <section class="relative flex items-end justify-center lg:justify-end">
+        <img
+          :src="image"
+          alt=""
+          class="max-h-[260px] sm:max-h-[360px] w-auto object-contain
+                 lg:object-cover lg:absolute lg:bottom-0 lg:right-0 lg:max-h-none"
+        />
+      </section>
+    </main>
   </div>
 </template>
 
@@ -108,9 +122,7 @@ const checkComplete = () => {
   }
 }
 
-const goBack = () => {
-  router.push(`/login/${props.role}`)
-}
+const goBack = () => { router.push(`/login/${props.role}`) }
 
 watch(() => [...pin.value], (val) => {
   if (val.every(d => d !== '')) checkComplete()

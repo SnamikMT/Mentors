@@ -1,22 +1,28 @@
 <template>
   <div
-    class="relative w-14 h-16 rounded-xl outline outline-1 flex items-center justify-center transition-colors duration-150"
+    class="relative rounded-xl outline outline-1 flex items-center justify-center transition-colors duration-150
+           w-12 h-14 sm:w-14 sm:h-16"
     :class="isHighlighted ? 'outline-blue-500 bg-white' : 'outline-neutral-200 bg-white'"
   >
+    <!-- временно показываем цифру -->
     <span
       v-if="modelValue && showDigit"
-      class="absolute inset-0 flex items-center justify-center text-2xl leading-none text-black select-none pointer-events-none"
+      class="absolute inset-0 flex items-center justify-center
+             text-xl sm:text-2xl leading-none text-black select-none pointer-events-none"
     >
       {{ modelValue }}
     </span>
-    
+
+    <!-- иначе точка -->
     <img
       v-else-if="modelValue"
       :src="dotIcon"
-      alt="•"
-      class="w-3 h-3 select-none pointer-events-none"
+      alt=""
+      aria-hidden="true"
+      class="w-2.5 h-2.5 sm:w-3 sm:h-3 select-none pointer-events-none"
     />
-   
+
+    <!-- невидимый инпут поверх -->
     <input
       ref="inputEl"
       type="text"
@@ -24,7 +30,9 @@
       autocomplete="one-time-code"
       pattern="[0-9]*"
       maxlength="1"
-      class="absolute inset-0 w-full h-full text-center text-2xl bg-transparent text-transparent caret-transparent selection:bg-transparent outline-none"
+      :aria-label="`Цифра ${index + 1}`"
+      class="absolute inset-0 w-full h-full text-center bg-transparent
+             text-transparent caret-transparent selection:bg-transparent outline-none"
       :value="modelValue"
       @focus="setActive(true)"
       @blur="setActive(false)"
@@ -36,19 +44,19 @@
 </template>
 
 <script setup>
-import { ref, computed, nextTick, defineProps, defineEmits, defineExpose, onBeforeUnmount } from 'vue'
+import { ref, computed, nextTick, onBeforeUnmount } from 'vue'
 import dotIcon from '../../src/assets/icons/login-page/Dot.svg'
 
 const props = defineProps({
   modelValue: { type: String, default: '' },
   index: { type: Number, required: true },
 })
-
 const emit = defineEmits(['update:modelValue','move-next','move-prev','paste-digits'])
 
 const inputEl = ref(null)
 const isActive = ref(false)
 const isHighlighted = computed(() => isActive.value || !!props.modelValue)
+
 const showDigit = ref(false)
 let hideTimer = null
 const DISPLAY_MS = 350
@@ -58,7 +66,7 @@ defineExpose({
   select: () => inputEl.value?.select(),
 })
 
-const setActive = (v) => { isActive.value = v }
+const setActive = v => { isActive.value = v }
 
 const flashDigit = () => {
   showDigit.value = true
@@ -66,7 +74,7 @@ const flashDigit = () => {
   hideTimer = setTimeout(() => { showDigit.value = false }, DISPLAY_MS)
 }
 
-const onInput = (e) => {
+const onInput = e => {
   const v = (e.target.value || '').replace(/\D/g, '')
   const digit = v.slice(-1)
   emit('update:modelValue', digit)
@@ -76,7 +84,7 @@ const onInput = (e) => {
   }
 }
 
-const onKeydown = (e) => {
+const onKeydown = e => {
   const val = props.modelValue || ''
   if (e.key === 'Backspace') {
     if (val) {
@@ -92,7 +100,7 @@ const onKeydown = (e) => {
   if (e.key === 'ArrowRight'){ emit('move-next', props.index); e.preventDefault() }
 }
 
-const onPaste = (e) => {
+const onPaste = e => {
   const text = (e.clipboardData?.getData('text') || '').replace(/\D/g, '')
   if (!text) return
   e.preventDefault()
