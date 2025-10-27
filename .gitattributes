@@ -1,0 +1,8 @@
+# добавьте .gitattributes и нормализуйте
+@'
+*.vue   text eol=lf
+*.js    text eol=lf
+*.ts    text eol=lf
+*.json  text eol=lf
+*.md    text eol=lf
+'@ | Out-File -Encoding ascii .gitattributes
