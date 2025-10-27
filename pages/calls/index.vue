@@ -1,10 +1,36 @@
 <template>
-  <div class="w-full max-w-[1440px] pr-48 bg-Backgrounds-Neutral-Primary inline-flex justify-start items-start gap-12 overflow-hidden">
-    <Sidebar />
-    <div class="flex-1 pt-4 pl-[48px] flex flex-col gap-[16px]">
-      <Header sectionTitle="История звонков" :sectionIcon="sectionIcon"/>
-      <SearchInput />
-      <div class="flex flex-col gap-[36px]">
+  <!-- Мобилка: столбец; Десктоп: две колонки -->
+  <div class="w-full max-w-[1440px] bg-Backgrounds-Neutral-Primary flex flex-col lg:flex-row gap-0 lg:gap-12 overflow-hidden">
+    <!-- Sidebar только ≥lg -->
+    <Sidebar class="hidden lg:flex" />
+
+    <!-- Мобильный Header -->
+    <MobileHeader class="lg:hidden" />
+
+    <!-- Контент -->
+    <div class="w-full lg:max-w-[1008px] px-4 sm:px-6 lg:pl-[48px] lg:pr-6 pt-4 lg:pt-6 flex flex-col">
+      <!-- Десктопный заголовок -->
+      <Header
+        class="hidden lg:block mb-6"
+        sectionTitle="История звонков"
+        :sectionIcon="sectionIcon"
+      />
+
+      <!-- Мобильный мини-заголовок -->
+      <div class="lg:hidden flex items-center gap-2 mb-4">
+        <img :src="sectionIcon" alt="" class="w-5 h-5" />
+        <span class="text-base font-medium text-[#020203] leading-normal">
+          История звонков
+        </span>
+      </div>
+
+      <!-- Поиск -->
+      <div class="mb-6 lg:mb-8">
+        <SearchInput class="w-full" />
+      </div>
+
+      <!-- Секции со звонками -->
+      <div class="flex flex-col gap-9 lg:gap-[36px]">
         <CallSection title="Март, 2025" :calls="marchCalls" />
         <CallSection title="Февраль, 2025" :calls="februaryCalls" />
       </div>
@@ -13,12 +39,15 @@
 </template>
 
 <script setup>
-import Sidebar from '../components/profile/sidebar/Sidebar.vue'
-import Header from '../components/profile/Header.vue'
-import SearchInput from '../components/mentors/calls/SearchInput.vue'
-import CallSection from '../components/mentors/calls/CallSection.vue'
-import sectionIcon from '../src/assets/icons/profile/mentors/call.svg'
-import callImage from '../src/assets/img/mentor/calls/calls.png'
+import Sidebar from '@/components/profile/sidebar/Sidebar.vue'
+import MobileHeader from '@/components/profile/header/MobileHeader.vue'
+import Header from '@/components/profile/Header.vue'
+
+import SearchInput from '@/components/mentors/calls/SearchInput.vue'
+import CallSection from '@/components/mentors/calls/CallSection.vue'
+
+import sectionIcon from '@/src/assets/icons/profile/mentors/call.svg'
+import callImage from '@/src/assets/img/mentor/calls/calls.png'
 
 const mockCall = {
   title: 'Оптимизация handoff в разработке продукта',
@@ -30,12 +59,33 @@ const mockCall = {
 
 const marchCalls = Array(9).fill(null).map((_, i) => ({
   ...mockCall,
-  id: `march-${i+1}`
+  id: `march-${i + 1}`
 }))
 
-const februaryCalls = Array(3).fill(null).map((_, i) => ({
+const februaryCalls = Array(6).fill(null).map((_, i) => ({
   ...mockCall,
-  id: `february-${i+1}`,
+  id: `february-${i + 1}`,
   date: '22.02.2025'
 }))
 </script>
+
+<style scoped>
+/* Если внутри CallSection фиксирована сетка — мягко переопределим её тут */
+:deep(.call-grid){
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 640px){
+  :deep(.call-grid){
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+}
+@media (min-width: 1024px){
+  :deep(.call-grid){
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+  }
+}
+</style>
