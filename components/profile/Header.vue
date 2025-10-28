@@ -4,7 +4,7 @@
     <header
       class="w-full flex justify-between items-center
              py-3 sm:py-4 lg:py-0
-             mb-6 sm:mb-8 lg:mb-12
+             mb-6 sm:mb-8 lg:mb-8
              lg:mt-2
              lg:relative
              sticky top-[env(safe-area-inset-top)] z-[60] bg-white/90 backdrop-blur lg:static lg:bg-transparent"
