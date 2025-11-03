@@ -1,9 +1,8 @@
 <template>
+    <NuxtLayout name="app">
   <div class="w-full max-w-[1440px] bg-Backgrounds-Neutral-Primary flex flex-col lg:flex-row gap-0 lg:gap-12 overflow-hidden">
-    <Sidebar class="hidden lg:flex" />
-    <MobileHeader class="lg:hidden" />
 
-    <div class="w-full lg:max-w-[1008px] px-4 sm:px-6 lg:pl-[48px] lg:pr-6 pt-4 lg:pt-6 flex flex-col">
+    <div class="w-full px-4 sm:px-6 lg:pl-[48px] lg:pr-6 pt-4 lg:pt-6 flex flex-col">
       <!-- Десктопный заголовок -->
       <div class="hidden lg:flex items-center gap-3 mb-2">
         <button
@@ -153,6 +152,7 @@
       </div>
     </div>
   </div>
+  </NuxtLayout>
 </template>
 
 <script setup>

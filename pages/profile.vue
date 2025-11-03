@@ -1,8 +1,7 @@
 <template>
+  <NuxtLayout name="app">
   <!-- Мобилка: столбец; Десктоп: две колонки -->
   <div class="w-full max-w-[1440px] bg-Backgrounds-Neutral-Primary flex flex-col lg:flex-row gap-0 lg:gap-12 overflow-hidden">
-    <!-- Sidebar только ≥lg -->
-    <Sidebar class="hidden lg:flex" />
 
     <!-- Контент -->
     <div class="w-full lg:max-w-[1008px] px-4 sm:px-6 lg:pl-[48px] lg:pr-12 pt-4 lg:pt-6 flex flex-col gap-6">
@@ -89,6 +88,7 @@
       </div>
     </div>
   </div>
+  </NuxtLayout>
 </template>
 
 <script setup>

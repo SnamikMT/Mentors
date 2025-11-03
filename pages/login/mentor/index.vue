@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen w-full bg-white flex flex-col font-geist overflow-hidden">
+  <div class="min-h-screen w-full bg-white flex flex-col font-geist overflow-x-hidden">
     <!-- HEADER -->
     <header class="w-full flex items-center justify-between px-6 sm:px-12 lg:px-32 py-6">
       <img :src="logo" alt="logo" class="w-16 sm:w-20 h-6 sm:h-8" />
@@ -8,7 +8,7 @@
         :segments="[
           { label: 'Ученикам', value: 1 },
           { label: 'Менторам', value: 2 },
-          { label: 'Бизнесу', value: 3 }
+          { label: 'Бизнесу',  value: 3 }
         ]"
         :dividerAfter="[]"
         aria-label="Аудитория"
@@ -16,107 +16,163 @@
     </header>
 
     <!-- MAIN -->
-    <main class="flex flex-col-reverse lg:flex-row flex-1 relative">
-      <!-- Левая колонка: форма -->
-      <section class="w-full lg:w-1/2 px-6 sm:px-12 lg:px-32 py-10 flex flex-col">
+    <main
+      class="flex-1 relative px-6 sm:px-12 lg:px-32"
+      :style="isDesktop ? { paddingRight: 'calc(min(50vw, 1100px) + 32px)' } : {}"
+    >
+      <!-- Левая колонка (единый ровный столбец) -->
+      <section class="w-full max-w-[760px] py-10 lg:py-16">
         <h1 class="text-[32px] sm:text-[40px] lg:text-[48px] font-medium leading-tight text-black">
           Вход в Менторс<br />
           <span class="text-[#3C3C43]/40">для менторов</span>
         </h1>
 
-        <!-- Email -->
-        <div class="mt-8 w-full max-w-md">
-          <div
-            :class="[
-              'flex rounded-xl border transition-all duration-200 bg-white',
-              isFocused ? 'border-[#2F80ED] ring-2 ring-[#2F80ED]/30' : 'border-[#7878801A]'
-            ]"
-          >
-            <div class="w-4 pl-3 py-4"></div>
-            <div class="flex-1 flex flex-col">
+        <div class="form-col mt-8">
+          <!-- Email: плавающий лейбл поверх бордера -->
+          <div>
+            <div class="relative" :class="isFocused ? 'z-10' : ''">
               <label
-                class="text-sm font-medium text-[#787880B3] leading-3 bg-white px-1 ml-1 mt-1"
+                class="absolute -top-2 left-3 px-1 bg-white text-sm font-medium transition-colors"
                 :class="(isFocused || mail) ? 'text-black' : 'text-[#787880B3]'"
               >
                 Почта
               </label>
-              <input
-                v-model="mail"
-                @focus="isFocused = true"
-                @blur="isFocused = false"
-                type="email"
-                placeholder="example@mail.com"
-                class="w-full bg-transparent outline-none px-2 pb-3 text-base text-[#787880AA] placeholder-[#78788066]"
-                :class="(isFocused || mail) ? 'text-black' : 'text-[#787880AA]'"
-              />
+
+              <div
+                :class="[
+                  'flex items-center rounded-xl border bg-white transition-all duration-200',
+                  isFocused ? 'border-[#2F80ED] ring-2 ring-[#2F80ED]/30' : 'border-[#7878801A]'
+                ]"
+              >
+                <div class="w-4 pl-3 py-4"></div>
+                <input
+                  v-model="mail"
+                  @focus="isFocused = true"
+                  @blur="isFocused = false"
+                  type="email"
+                  placeholder="example@mail.com"
+                  class="flex-1 bg-transparent outline-none px-2 py-4 text-base placeholder-[#78788066]"
+                  :class="(isFocused || mail) ? 'text-black' : 'text-[#787880AA]'"
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Кнопка -->
-        <button
-          @click="goToPin"
-          class="mt-6 flex items-center justify-center gap-2 py-4 w-full max-w-md bg-gradient-to-b from-[#2F80ED] to-[#1C6DD0] rounded-2xl shadow-md"
-        >
-          <img :src="mailIcon" alt="mail" class="w-6 h-6" />
-          <span class="text-base font-medium text-white">Получить код</span>
-        </button>
+          <!-- Кнопка (переиспользуем AppButton) -->
+          <AppButton
+            full
+            size="lg"
+            :leftIcon="mailIcon"
+            :iconSize="24"
+            class="mt-6"
+            @click="goToPin"
+          >
+            Получить код
+          </AppButton>
 
-        <!-- Соц вход -->
-        <div class="mt-10 flex flex-col items-center w-full max-w-md">
-          <p class="text-sm font-medium text-black text-center">или войди с помощью</p>
-          <div class="mt-4 grid grid-cols-4 gap-3 sm:gap-4 w-full">
-            <button
-              v-for="icon in [yandexIcon, vkIcon, googleIcon, tinkoffIcon]"
-              :key="icon"
-              class="flex justify-center items-center py-4 bg-white rounded-2xl border border-gray-200 hover:shadow-sm transition"
-            >
-              <img :src="icon" alt="" class="w-6 h-6" />
-            </button>
+          <!-- Соц вход -->
+          <div class="mt-10 flex flex-col items-center">
+            <p class="text-sm font-medium text-black text-center">или войди с помощью</p>
+            <div class="mt-4 grid grid-cols-4 gap-3 sm:gap-4 w-full">
+              <button
+                v-for="icon in [yandexIcon, vkIcon, googleIcon, tinkoffIcon]"
+                :key="icon"
+                class="flex justify-center items-center py-4 bg-white rounded-2xl border border-gray-200 hover:shadow-sm transition"
+              >
+                <img :src="icon" alt="" class="w-6 h-6" />
+              </button>
+            </div>
+          </div>
+
+          <!-- SSO -->
+          <button
+            class="mt-3 py-4 bg-white rounded-2xl border border-gray-200 flex justify-center items-center gap-2 hover:shadow-sm transition"
+          >
+            <img :src="unlockIcon" alt="Unlock" class="w-5 h-5" />
+            <span class="text-base font-medium text-black">Единый вход через SSO</span>
+          </button>
+
+          <!-- Agreement: две строки, по центру -->
+          <div class="mt-10 sm:mt-12 lg:mt-16 text-center text-sm sm:text-base text-[#3C3C43]/70 leading-relaxed">
+            <p>Продолжая, ты соглашаешься с <a href="#" class="underline">Правилами</a></p>
+            <p>сервиса и <a href="#" class="underline">Политикой конфиденциальности</a></p>
           </div>
         </div>
-
-        <!-- Agreement -->
-        <div class="mt-10 sm:mt-12 lg:mt-auto text-center text-sm sm:text-base text-[#3C3C43]/70 leading-relaxed">
-          Продолжая, ты соглашаешься с
-          <span class="underline">Правилами сервиса</span>
-          и
-          <span class="underline">Политикой конфиденциальности</span>
-        </div>
       </section>
 
-      <!-- Правая колонка: изображение -->
-      <section class="relative w-full lg:w-1/2 flex justify-center items-end lg:items-stretch bg-[#F8FAFC]">
-        <img
-          :src="loginImage"
-          alt="login illustration"
-          class="max-h-[300px] sm:max-h-[400px] lg:max-h-none w-auto object-contain lg:object-cover lg:absolute lg:right-0 lg:bottom-0"
-        />
-      </section>
+      <!-- Иллюстрация: всегда в правом нижнем углу, крупная, без фона -->
+      <img
+        :src="loginImage"
+        alt="login illustration"
+        class="pointer-events-none select-none"
+        :style="isDesktop
+          ? {
+              position: 'fixed',
+              right: '0',
+              bottom: '0',
+              height: 'clamp(420px, 58vh, 980px)',
+              maxWidth: 'min(50vw, 1100px)',
+              objectFit: 'contain'
+            }
+          : {
+              display: 'block',
+              margin: '24px auto 0',
+              height: '340px',
+              objectFit: 'contain'
+            }"
+      />
     </main>
   </div>
 </template>
 
 <script setup>
+import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { useRouter } from '#imports'
-import { ref } from 'vue'
 import SegmentedSwitch from '../components/login/SegmentedSwitch.vue'
+import AppButton from '@/components/ui/AppButton.vue'
 
-import logo from '../src/assets/img/login-page/logo.svg'
-import mailIcon from '../src/assets/icons/login-page/mail.svg'
-import yandexIcon from '../src/assets/icons/login-page/yandex.svg'
-import vkIcon from '../src/assets/icons/login-page/vk.svg'
-import googleIcon from '../src/assets/icons/login-page/google.svg'
+import logo        from '../src/assets/img/login-page/logo.svg'
+import mailIcon    from '../src/assets/icons/login-page/mail.svg'
+import yandexIcon  from '../src/assets/icons/login-page/yandex.svg'
+import vkIcon      from '../src/assets/icons/login-page/vk.svg'
+import googleIcon  from '../src/assets/icons/login-page/google.svg'
 import tinkoffIcon from '../src/assets/icons/login-page/tinkoff.svg'
-import loginImage from '../src/assets/img/login-page/image3.png'
+import unlockIcon  from '../src/assets/icons/login-page/unlock.svg'
+import loginImage  from '../src/assets/img/login-page/image3.png'
 
-const router = useRouter()
-const mail = ref('')
+const router    = useRouter()
+const mail      = ref('')
 const isFocused = ref(false)
-const selected = ref(2)
+const selected  = ref(2)
+
+const isDesktop = ref(false)
+let mql, off
+onMounted(() => {
+  if ('matchMedia' in window) {
+    mql = window.matchMedia('(min-width: 1024px)')
+    const update = e => (isDesktop.value = e.matches)
+    isDesktop.value = mql.matches
+    if (mql.addEventListener) { mql.addEventListener('change', update); off = () => mql.removeEventListener('change', update) }
+    else { mql.addListener(update); off = () => mql.removeListener(update) }
+  }
+})
+onBeforeUnmount(() => { off && off() })
 
 const goToPin = () => {
   if (mail.value.trim()) router.push('/login/mentor/pin')
   else alert('Пожалуйста, введите ваш email')
 }
 </script>
+
+<style scoped>
+/* Ровный единый столбец формы: всё одинаковой ширины */
+.form-col{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* выравниваем по левому краю */
+}
+.form-col > *{
+  width: 100%;
+  max-width: 28rem; /* = max-w-md */
+}
+</style>

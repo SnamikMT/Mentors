@@ -1,14 +1,10 @@
 <template>
+    <NuxtLayout name="app">
   <!-- Мобилка: столбец; Десктоп: две колонки -->
   <div class="w-full max-w-[1440px] bg-Backgrounds-Neutral-Primary flex flex-col lg:flex-row gap-0 lg:gap-12 overflow-hidden">
-    <!-- Sidebar ≥lg -->
-    <Sidebar class="hidden lg:flex" />
-
-    <!-- Мобильный Header -->
-    <MobileHeader class="lg:hidden" title="Ментор" />
 
     <!-- Контент 1008 -->
-    <div class="w-full lg:max-w-[1008px] px-4 sm:px-6 lg:pl-[48px] lg:pr-6 pt-4 lg:pt-6 flex flex-col">
+    <div class="w-full lg:max-w-[1008px] px-4 sm:px-6 lg:pl-[48px] lg:pr-6 pt-[56px] lg:pt-6 flex flex-col">
       <!-- Кнопка «Назад» на десктопе -->
       <div class="hidden lg:block mb-4">
         <button
@@ -38,10 +34,14 @@
             </div>
           </div>
 
-          <button class="btn-primary" @click="isModalOpen = true">
-            <img :src="iconCalendar" class="h-5 w-5" alt="" />
-            <span class="text-[16px] leading-[24px]">Выбрать дату звонка</span>
-          </button>
+            <AppButton
+                full
+                size="lg"
+                :leftIcon="iconCalendar"
+                @click="isModalOpen = true"
+              >
+                Выбрать дату звонка
+              </AppButton>
 
           <div class="grid grid-cols-2 gap-3">
             <div class="h-12 rounded-[16px] bg-[#F2F3F5] flex items-center justify-center gap-2 px-4 text-[16px] leading-[24px] text-[#101012]">
@@ -170,11 +170,14 @@
       />
     </div>
   </div>
+  </NuxtLayout>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+
+import AppButton from '@/components/ui/AppButton.vue'
 
 import Sidebar from '@/components/profile/sidebar/Sidebar.vue'
 import MobileHeader from '@/components/profile/header/MobileHeader.vue'

@@ -1,15 +1,12 @@
 <template>
+    <NuxtLayout name="app">
   <!-- Мобилка: столбец; ≥lg: Sidebar + контент -->
   <div
     class="w-full max-w-[1440px] bg-Backgrounds-Neutral-Primary flex flex-col lg:flex-row items-stretch gap-0 lg:gap-12 overflow-hidden"
   >
-    <!-- Sidebar только на ≥lg -->
-    <Sidebar class="hidden lg:flex" />
 
     <!-- Контент + шапки -->
     <div class="flex-1 pt-4 pb-12 flex flex-col">
-      <!-- Моб. хедер -->
-      <MobileHeader class="lg:hidden px-4 sm:px-6" />
 
       <!-- Хедер страницы -->
       <div class="px-4 sm:px-6 lg:px-0">
@@ -31,6 +28,7 @@
       </div>
     </div>
   </div>
+  </NuxtLayout>
 </template>
 
 <script setup>

@@ -6,9 +6,9 @@
     </header>
 
     <!-- main -->
-    <main class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0 items-start">
+    <main class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0 items-stretch">
       <!-- контент -->
-      <section class="px-6 sm:px-10 lg:px-32 pb-8 flex flex-col gap-8">
+      <section class="px-6 sm:px-10 lg:pl-32 lg:pr-0 pb-8 flex flex-col gap-8">
         <div class="flex flex-col gap-3 mt-2 sm:mt-6">
           <h1 class="text-[28px] leading-[36px] sm:text-[40px] sm:leading-[52px] lg:text-[48px] lg:leading-[64px] font-medium text-[#020203]">
             А теперь введи код
@@ -50,14 +50,21 @@
       </section>
 
       <!-- иллюстрация -->
-      <section class="relative flex items-end justify-center lg:justify-end">
-        <img
-          :src="image"
-          alt=""
-          class="max-h-[260px] sm:max-h-[360px] w-auto object-contain
-                 lg:object-cover lg:absolute lg:bottom-0 lg:right-0 lg:max-h-none"
-        />
-      </section>
+ <section class="relative flex items-end justify-center lg:justify-end px-6 sm:px-10 lg:px-0 lg:pl-[17px]">
+    <img
+      :src="image"
+      alt=""
+      class="
+        h-auto object-contain select-none
+        max-h-[260px] sm:max-h-[360px]                /* мобилки/планшеты */
+        lg:max-h-none lg:w-[46vw]                     /* крупнее на десктопе */
+        lg:min-w-[640px] lg:max-w-[980px]             /* пределы, чтобы не была мелкой */
+        2xl:w-[48vw] 2xl:min-w-[640px] 2xl:max-w-[1180px]
+        mr-0                                          /* без правого отступа */
+      "
+    />
+  </section>
+
     </main>
   </div>
 </template>

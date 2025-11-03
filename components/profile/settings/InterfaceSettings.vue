@@ -7,14 +7,10 @@
       >
         <div class="px-4 lg:px-6 flex items-center gap-4">
           <div class="flex-1 flex items-center gap-2">
-            <div
-              class="w-8 h-6 rounded-sm bg-[#101012] outline outline-1 outline-[#101012]/20 grid place-items-center"
-            >
+            <div class="w-8 h-6 rounded-sm bg-[#101012] outline outline-1 outline-[#101012]/20 grid place-items-center">
               <img :src="IconCardMini" alt="" class="w-4 h-4" />
             </div>
-            <div
-              class="text-base font-medium font-geist text-Labels-Neutral-Primary leading-normal"
-            >
+            <div class="text-base font-medium font-geist text-Labels-Neutral-Primary leading-normal">
               MIR •• 9547
             </div>
           </div>
@@ -34,34 +30,20 @@
               class="w-9 h-6 rounded-full relative transition"
               @click="autoPay = !autoPay"
             >
-              <div
-                class="absolute inset-0 rounded-full"
-                :class="autoPay ? 'bg-blue-500' : 'bg-[#787880]/10'"
-              />
-              <div
-                class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-white shadow"
-                :class="autoPay ? 'right-0.5' : 'left-0.5'"
-              />
+              <div class="absolute inset-0 rounded-full" :class="autoPay ? 'bg-blue-500' : 'bg-[#787880]/10'" />
+              <div class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-white shadow" :class="autoPay ? 'right-0.5' : 'left-0.5'" />
             </button>
-            <div
-              class="text-base font-normal font-geist text-Labels-Neutral-Primary leading-normal"
-            >
+            <div class="text-base font-normal font-geist text-Labels-Neutral-Primary leading-normal">
               Авто-платеж
             </div>
           </div>
 
-          <p
-            class="text-base font-normal font-geist text-[#3C3C43]/70 leading-normal"
-          >
-            Мы не отменим забронированный звонок, даже если баланс будет 0 ₽, а
-            просто спишем стоимость звонка с выбранной карты за сутки до его
-            начала.
+          <p class="text-base font-normal font-geist text-[#3C3C43]/70 leading-normal">
+            Мы не отменим забронированный звонок, даже если баланс будет 0 ₽, а просто спишем стоимость звонка с выбранной карты за сутки до его начала.
           </p>
         </div>
 
-        <div
-          class="absolute left-4 lg:left-5 top-0 -translate-y-1/2 bg-white px-2 py-0.5 rounded text-sm font-medium text-Labels-Neutral-Primary"
-        >
+        <div class="absolute left-4 lg:left-5 top-0 -translate-y-1/2 bg-white px-2 py-0.5 rounded text-sm font-medium text-Labels-Neutral-Primary">
           Оплата
         </div>
       </section>
@@ -71,15 +53,9 @@
         class="relative rounded-[24px] lg:rounded-[32px] bg-Backgrounds-Neutral-Primary border border-Border-Neutral-Base/20 pt-7 lg:pt-9 pb-5 lg:pb-6 flex flex-col gap-5 lg:gap-6"
       >
         <div class="px-4 lg:px-6 flex flex-col gap-4">
-          <div class="text-sm font-medium font-geist leading-3 text-[#3C3C43]/70">
-            Тема
-          </div>
-          <SegmentedSwitch
-            class="!ml-0"
-            v-model="theme"
-            :segments="themeSegments"
-            :divider-after="[1]"
-          />
+          <div class="text-sm font-medium font-geist leading-3 text-[#3C3C43]/70">Тема</div>
+          <!-- ✅ добавили класс seg-fat -->
+          <SegmentedSwitch class="seg-fat !ml-0" v-model="theme" :segments="themeSegments" :divider-after="[1]" />
         </div>
 
         <div class="px-4 lg:px-6">
@@ -87,10 +63,9 @@
         </div>
 
         <div class="px-4 lg:px-6 flex flex-col gap-4">
-          <div class="text-sm font-medium font-geist leading-3 text-[#3C3C43]/70">
-            Временной формат
-          </div>
-          <SegmentedSwitch class="!ml-0" v-model="timeFormat" :segments="timeFormatSegments" />
+          <div class="text-sm font-medium font-geist leading-3 text-[#3C3C43]/70">Временной формат</div>
+          <!-- ✅ тоже шире -->
+          <SegmentedSwitch class="seg-fat !ml-0" v-model="timeFormat" :segments="timeFormatSegments" />
         </div>
 
         <div class="px-4 lg:px-6">
@@ -98,15 +73,9 @@
         </div>
 
         <div class="px-4 lg:px-6 flex flex-col gap-4">
-          <div class="text-sm font-medium font-geist leading-3 text-[#3C3C43]/70">
-            Начало недели
-          </div>
-          <SegmentedSwitch
-            class="!ml-0"
-            v-model="weekStart"
-            :segments="weekStartSegments"
-            :divider-after="[1]"
-          />
+          <div class="text-sm font-medium font-geist leading-3 text-[#3C3C43]/70">Начало недели</div>
+          <!-- ✅ и здесь -->
+          <SegmentedSwitch class="seg-fat !ml-0" v-model="weekStart" :segments="weekStartSegments" :divider-after="[1]" />
         </div>
 
         <div class="px-4 lg:px-6">
@@ -114,13 +83,8 @@
         </div>
 
         <div class="px-4 lg:px-6 flex flex-col gap-4">
-          <div class="text-sm font-medium font-geist leading-3 text-[#3C3C43]/70">
-            Часовой пояс
-          </div>
-          <button
-            type="button"
-            class="w-full rounded-xl border border-Border-Neutral-Base/20 overflow-hidden text-left"
-          >
+          <div class="text-sm font-medium font-geist leading-3 text-[#3C3C43]/70">Часовой пояс</div>
+          <button type="button" class="w-full rounded-xl border border-Border-Neutral-Base/20 overflow-hidden text-left">
             <div class="pl-4 pr-3 py-3 flex items-center gap-2">
               <div class="font-geist text-base leading-normal">
                 <span class="text-Labels-Neutral-Primary">Европа / Москва&nbsp;</span>
@@ -136,25 +100,16 @@
         </div>
 
         <div class="px-4 lg:px-6 flex flex-col gap-4">
-          <div class="text-sm font-medium font-geist leading-3 text-[#3C3C43]/70">
-            Язык
-          </div>
-          <button
-            type="button"
-            class="w-full rounded-xl border border-Border-Neutral-Base/20 overflow-hidden text-left"
-          >
+          <div class="text-sm font-medium font-geist leading-3 text-[#3C3C43]/70">Язык</div>
+          <button type="button" class="w-full rounded-xl border border-Border-Neutral-Base/20 overflow-hidden text-left">
             <div class="pl-4 pr-3 py-3 flex items-center gap-2">
-              <div class="text-base font-normal font-geist text-Labels-Neutral-Primary leading-normal">
-                Русский
-              </div>
+              <div class="text-base font-normal font-geist text-Labels-Neutral-Primary leading-normal">Русский</div>
               <img :src="IconChevron" alt="" class="w-4 h-4 ml-auto" />
             </div>
           </button>
         </div>
 
-        <div
-          class="absolute left-4 lg:left-5 top-0 -translate-y-1/2 bg-white px-2 py-0.5 rounded text-sm font-medium text-Labels-Neutral-Primary"
-        >
+        <div class="absolute left-4 lg:left-5 top-0 -translate-y-1/2 bg-white px-2 py-0.5 rounded text-sm font-medium text-Labels-Neutral-Primary">
           Интерфейс
         </div>
       </section>
@@ -171,18 +126,10 @@
             class="w-9 h-6 rounded-full relative transition"
             @click="recordCalls = !recordCalls"
           >
-            <div
-              class="absolute inset-0 rounded-full"
-              :class="recordCalls ? 'bg-blue-500' : 'bg-[#787880]/10'"
-            />
-            <div
-              class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-white shadow"
-              :class="recordCalls ? 'right-0.5' : 'left-0.5'"
-            />
+            <div class="absolute inset-0 rounded-full" :class="recordCalls ? 'bg-blue-500' : 'bg-[#787880]/10'" />
+            <div class="absolute top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-white shadow" :class="recordCalls ? 'right-0.5' : 'left-0.5'" />
           </button>
-          <div
-            class="text-base font-normal font-geist text-Labels-Neutral-Primary leading-normal"
-          >
+          <div class="text-base font-normal font-geist text-Labels-Neutral-Primary leading-normal">
             Хранить записи звонков
           </div>
         </div>
@@ -191,9 +138,7 @@
           Записи можно пересмотреть, они резюмируются искусственным интеллектом и помогают в случае конфликтных ситуаций.
         </p>
 
-        <div
-          class="absolute left-4 lg:left-5 top-0 -translate-y-1/2 bg-white px-2 py-0.5 rounded text-sm font-medium text-Labels-Neutral-Primary"
-        >
+        <div class="absolute left-4 lg:left-5 top-0 -translate-y-1/2 bg-white px-2 py-0.5 rounded text-sm font-medium text-Labels-Neutral-Primary">
           Конфиденциальность
         </div>
       </section>
@@ -230,3 +175,47 @@ const theme = ref('Label1')
 const timeFormat = ref('Label1')
 const weekStart = ref('Label1')
 </script>
+
+<style scoped>
+/* === РАСШИРЯЕМ ТАБЫ SegmentedSwitch, не лезя в сам компонент ===
+   Кладём класс seg-fat на корневой элемент компонента и через :deep
+   растягиваем кнопки, увеличиваем высоту и паддинги. */
+
+:deep(.seg-fat){
+  width: 100%;
+}
+
+/* если у компонента корнем стоит inline-flex — этого достаточно */
+:deep(.seg-fat > button){
+  flex: 1 1 0%;
+  min-width: 0;
+  height: 48px;              /* выше таба */
+  padding-left: 24px;        /* шире текстовая зона */
+  padding-right: 24px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* иногда внутри есть обёртка — на всякий случай продублируем */
+:deep(.seg-fat * > button){
+  flex: 1 1 0%;
+  min-width: 0;
+  height: 48px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* делаем разделители выше и чуть прозрачнее (если они есть) */
+:deep(.seg-fat .divider){
+  width: 1px;
+  height: 24px;
+  background: rgba(120,120,128,0.16);
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+/* сгладим «капсулу», чтобы смотрелась солиднее на широких контейнерах */
+:deep(.seg-fat){
+  border-radius: 9999px !important;
+}
+</style>

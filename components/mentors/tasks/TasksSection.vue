@@ -3,32 +3,28 @@
     <!-- шапка секции -->
     <div class="flex items-center gap-2">
       <!-- короткая левая линия -->
-      <div
-        class="h-[2px] w-3 rounded-full"
-        :class="ruleBgClass"
-      />
-      <!-- чип -->
+      <div class="h-[2px] w-3 rounded-full" :class="ruleBgClass" />
+
+      <!-- чип без иконки -->
       <div
         class="inline-flex items-center gap-2 px-3 py-1 rounded-full"
         :class="badgeBgClass"
       >
-        <img v-if="icon" :src="icon" alt="" class="w-4 h-4" />
         <span
-          class="text-[13px] font-medium leading-[16px]"
+          class="font-medium
+                 text-[14px] leading-[12px] tracking-[0]"
           :class="badgeTextClass"
-        >{{ label }}</span>
+        >
+          {{ label }}
+        </span>
       </div>
-      <!-- длинная правая линия: скрыта на мобилке -->
-      <div
-        class="hidden sm:block flex-1 h-[2px] rounded-full"
-        :class="ruleBgClass"
-      />
+
+      <!-- длинная правая линия -->
+      <div class="hidden sm:block flex-1 h-[2px] rounded-full" :class="ruleBgClass" />
     </div>
 
     <!-- сетка карточек -->
-    <div
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-6"
-    >
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-6">
       <TaskCard
         v-for="(t, i) in items"
         :key="t.id ?? i"
@@ -48,6 +44,7 @@ import TaskCard from './TaskCard.vue'
 const props = defineProps({
   label: { type: String, required: true },
   theme: { type: String, default: 'orange' }, // 'orange' | 'blue' | 'green'
+  // icon убираем из UI, но оставляем пропс на будущее — просто не используем его
   icon:  { type: String, default: '' },
   items: { type: Array,  default: () => [] }
 })

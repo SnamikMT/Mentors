@@ -1,63 +1,48 @@
 <template>
-  <!-- Мобильная колонка; на десктопе — сайдбар + контент -->
-  <div
-    class="w-full max-w-[1440px] mx-auto bg-Backgrounds-Neutral-Primary flex flex-col lg:flex-row gap-0 lg:gap-12 overflow-hidden"
-  >
-    <!-- Sidebar только ≥lg -->
-    <Sidebar class="hidden lg:flex shrink-0" />
+  <NuxtLayout name="app">
+    <div class="pb-24 lg:pb-28"><!-- нижний запас локально -->
+      <!-- Десктопный заголовок -->
+      <Header
+        class="hidden lg:block mb-6"
+        sectionTitle="Задания от ментора"
+        :sectionIcon="sectionIcon"
+      />
 
-    <!-- Мобильный Header только <lg -->
-    <MobileHeader class="lg:hidden" />
-
-    <!-- Контент -->
-    <div class="flex-1 w-full">
-      <!-- Внутренний контейнер: центрируем, 1008 на десктопе -->
-      <div class="mx-auto w-full max-w-[1008px] px-4 sm:px-6 lg:px-12 py-4 lg:py-8">
-        <!-- Заголовок/хлебные на десктопе -->
-        <Header
-          class="hidden lg:block mb-4"
-          sectionTitle="Задания от ментора"
-          :sectionIcon="sectionIcon"
-        />
-
-        <!-- Мобильный заголовок -->
-        <div class="lg:hidden mb-4">
-          <div class="text-[22px] leading-[28px] font-medium text-[#101012]">
-            Задания от ментора
-          </div>
-        </div>
-
-        <!-- Секции задач -->
-        <div class="flex flex-col gap-6 lg:gap-8">
-          <TasksSection
-            label="Активные"
-            theme="orange"
-            :icon="iconActive"
-            :items="activeTasks"
-          />
-
-          <TasksSection
-            label="На проверке"
-            theme="blue"
-            :icon="iconReview"
-            :items="reviewTasks"
-          />
-
-          <TasksSection
-            label="Проверенные"
-            theme="green"
-            :icon="iconVerified"
-            :items="verifiedTasks"
-          />
+      <!-- Мобильный заголовок -->
+      <div class="lg:hidden mb-4">
+        <div class="text-[22px] leading-[28px] font-medium text-[#101012]">
+          Задания от ментора
         </div>
       </div>
+
+      <!-- Секции задач -->
+      <div class="flex flex-col gap-6 lg:gap-8">
+        <TasksSection
+          label="Активные"
+          theme="orange"
+          :icon="iconActive"
+          :items="activeTasks"
+        />
+
+        <TasksSection
+          label="На проверке"
+          theme="blue"
+          :icon="iconReview"
+          :items="reviewTasks"
+        />
+
+        <TasksSection
+          label="Проверенные"
+          theme="green"
+          :icon="iconVerified"
+          :items="verifiedTasks"
+        />
+      </div>
     </div>
-  </div>
+  </NuxtLayout>
 </template>
 
 <script setup>
-import Sidebar from '@/components/profile/sidebar/Sidebar.vue'
-import MobileHeader from '@/components/profile/header/MobileHeader.vue'
 import Header from '@/components/profile/Header.vue'
 import TasksSection from '@/components/mentors/tasks/TasksSection.vue'
 
@@ -88,3 +73,18 @@ const verifiedTasks = [
   { title: 'Карточки курсов',           description: baseDesc, info: baseInfo }
 ]
 </script>
+
+<style scoped>
+/* Мягкая адаптация сетки карточек, если в TasksSection есть .tasks-grid */
+:deep(.tasks-grid){
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 640px){
+  :deep(.tasks-grid){ grid-template-columns: 1fr 1fr; gap: 16px; }
+}
+@media (min-width: 1024px){
+  :deep(.tasks-grid){ grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+}
+</style>
