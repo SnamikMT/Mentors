@@ -1,100 +1,84 @@
 <template>
-  <nav class="stepper">
-    <ul class="track no-scrollbar">
-      <li
-        v-for="(s, i) in steps" :key="s"
-        :class="[
-          'step',
-          i===0 && 'is-first',
-          i===steps.length-1 && 'is-last',
-          i===current && 'is-active',
-          compact && 'is-compact'
-        ]"
+  <nav class="flex items-center gap-2 overflow-x-auto no-scrollbar">
+    <button
+      v-for="(label, i) in steps"
+      :key="label + i"
+      type="button"
+      class="shrink-0 focus:outline-none"
+      @click="$emit('select', i)"
+    >
+      <svg
+        v-if="!compact"
+        :width="165"
+        :height="36"
+        viewBox="0 0 165 36"
+        xmlns="http://www.w3.org/2000/svg"
+        :style="{ color: i === current ? '#101012' : '#F7F8FA' }"
       >
-        <span class="label">{{ s }}</span>
-        <!-- белая «стрелка-вырез» между шагами -->
-        <span v-if="i!==steps.length-1" class="divider" />
-        <!-- черная стрелка активного последнего -->
-        <span v-if="i===current && i===steps.length-1" class="active-tail" />
-      </li>
-    </ul>
+        <!-- сам shape как в твоём step1.svg -->
+        <path d="M0 12C0 5.37258 5.37258 0 12 0H149V36H12C5.37258 36 0 30.6274 0 24V12Z" fill="currentColor"/>
+        <path d="M162.151 13.1513C164.829 15.8292 164.829 20.1709 162.151 22.8487L149 36L149 0L162.151 13.1513Z" fill="currentColor"/>
+        <!-- текст по центру -->
+        <text
+          x="50%"
+          y="50%"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          :fill="i === current ? '#FFFFFF' : '#101012'"
+          font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+          font-size="13"
+          font-weight="500"
+        >
+          {{ label }}
+        </text>
+      </svg>
+
+      <!-- компактный вариант для мобилки -->
+      <svg
+        v-else
+        :width="140"
+        :height="32"
+        viewBox="0 0 165 36"
+        xmlns="http://www.w3.org/2000/svg"
+        :style="{ color: i === current ? '#101012' : '#F7F8FA' }"
+      >
+        <path d="M0 12C0 5.37258 5.37258 0 12 0H149V36H12C5.37258 36 0 30.6274 0 24V12Z" fill="currentColor"/>
+        <path d="M162.151 13.1513C164.829 15.8292 164.829 20.1709 162.151 22.8487L149 36L149 0L162.151 13.1513Z" fill="currentColor"/>
+        <text
+          x="50%"
+          y="50%"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          :fill="i === current ? '#FFFFFF' : '#101012'"
+          font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+          font-size="12"
+          font-weight="500"
+        >
+          {{ label }}
+        </text>
+      </svg>
+    </button>
   </nav>
 </template>
 
-<script setup>
-defineProps({
-  steps:   { type: Array,  required: true },
-  current: { type: Number, default: 0 },
-  compact: { type: Boolean, default: false } // мобильный компактный режим
-})
+<script setup lang="ts">
+defineProps<{
+  steps: string[]
+  current: number
+  compact?: boolean
+}>()
+
+defineEmits<{
+  (e: 'select', index: number): void
+}>()
 </script>
 
 <style scoped>
-.stepper{
-  display:flex;
-  justify-content:center;          /* центр на десктопе */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
-.track{
-  display:inline-flex;
-  align-items:center;
-  gap:0;
-  overflow-x:auto;                  /* если не влазит — можно проскроллить */
-  padding:0; margin:0; list-style:none;
-}
-
-/* базовая «таблетка» */
-.step{
-  position:relative;
-  height:44px;
-  padding:0 24px;
-  display:inline-flex; align-items:center;
-  background:#F6F7FA; color:#101012;
-  border-radius:22px;
-  white-space:nowrap;
-  font-size:16px; line-height:24px; font-weight:500;
-}
-.step + .step{ margin-left:-18px; }
-
-/* белый спейсер-вырез между шагами */
-.divider{
-  position:absolute; top:0; right:-18px;
-  width:36px; height:100%;
-  background:#fff;
-  clip-path: polygon(0 0,100% 0,72% 50%,100% 100%,0 100%,28% 50%);
-  pointer-events:none;
-}
-
-/* активный */
-.is-active{ background:#101012; color:#fff; }
-
-/* активный последний — рисуем хвост */
-.active-tail{
-  position:absolute; top:0; right:-22px;
-  width:44px; height:100%;
-  background:#101012;
-  clip-path: polygon(0 0,100% 0,78% 50%,100% 100%,0 100%,22% 50%);
-}
-
-/* края */
-.is-first{ border-top-left-radius:22px; border-bottom-left-radius:22px; }
-.is-last { border-top-right-radius:22px; border-bottom-right-radius:22px; }
-
-/* мобильный компакт */
-.is-compact{
-  height:36px;
-  padding:0 14px;
-  font-size:14px;
-}
-.is-compact + .is-compact{ margin-left:-12px; }
-.is-compact .divider{ right:-12px; width:24px; }
-.is-compact.is-active .active-tail{ right:-16px; width:32px; }
-
-/* отключаем полосу прокрутки */
-.no-scrollbar::-webkit-scrollbar{ display:none; }
-.no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
-
-/* на мобилке степпер просто сверху; выравнивание слева удобнее для большого текста */
-@media (max-width: 640px){
-  .stepper{ justify-content:flex-start; }
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 </style>

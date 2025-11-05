@@ -12,4 +12,6 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+  compatibilityDate: '2025-11-05',
+  modules: ['@pinia/nuxt'],
 })
