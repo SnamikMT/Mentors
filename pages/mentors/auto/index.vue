@@ -1,6 +1,6 @@
 <template>
   <NuxtLayout name="app">
-    <!-- ДЕСКТОПНЫЙ Header -->
+    <!-- ДЕСКТОП -->
     <Header class="hidden lg:block" :stepperBg="'#fff'">
       <template #left>
         <button
@@ -9,7 +9,7 @@
                  outline outline-1 outline-[#787880]/10 hover:bg-black/5 transition"
           aria-label="Назад"
         >
-          <img :src="iconBack" class="w-5 h-5 opacity-70" alt="">
+          <img :src="iconBack" class="w-5 h-5 opacity-70" alt="" />
         </button>
       </template>
       <template #center>
@@ -17,7 +17,7 @@
       </template>
     </Header>
 
-    <!-- МОБИЛКА: просто блок, НЕ sticky -->
+    <!-- МОБИЛКА (без sticky) -->
     <div class="lg:hidden px-4 pt-3 pb-2">
       <div class="flex items-center gap-3">
         <button
@@ -26,7 +26,7 @@
                  outline outline-1 outline-[#787880]/10 hover:bg-black/5 transition"
           aria-label="Назад"
         >
-          <img :src="iconBack" class="w-5 h-5 opacity-70" alt="">
+          <img :src="iconBack" class="w-5 h-5 opacity-70" alt="" />
         </button>
         <div class="flex-1 min-w-0">
           <Stepper :steps="stepTitles" :current="store.step" compact />
@@ -53,7 +53,6 @@
     </div>
   </NuxtLayout>
 </template>
-
 
 <script setup lang="ts">
 import { computed } from 'vue'
@@ -82,8 +81,10 @@ const stepTitles = [
 const components = [Step1, Step2, Step3, Step4]
 const currentComponent = computed(() => components[store.step] ?? Step1)
 
+// всё, что накопили в сторе — пробрасываем
 const stepProps = computed(() => ({
   step: store.step,
+  // step1
   chips:       store.chips,
   expMonths:   store.expMonths,
   closer:      store.closer,
@@ -98,9 +99,12 @@ const stepProps = computed(() => ({
   timeDate:    store.timeDate,
   timeSlot:    store.timeSlot,
   priceTier:   store.priceTier,
+  // step2
   selectedMentorId: store.selectedMentorId,
   booking:          store.booking,
+  // step3
   tariff:           store.tariff,
+  // step4
   paymentMethod:    store.paymentMethod,
 }))
 
@@ -111,7 +115,7 @@ function goPrev() {
   if (store.step > 0) store.setStep(store.step - 1)
   else router.back()
 }
-function goTo(n:number) {
+function goTo(n: number) {
   if (n >= 0 && n < stepTitles.length) store.setStep(n)
 }
 function patchStore(payload: Record<string, unknown>) {

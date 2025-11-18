@@ -1,89 +1,376 @@
 <template>
+  <!-- ВНЕШНЯЯ ОБОЛОЧКА: фиксируем ширину, а высоту даём по контенту -->
   <div
-    class="w-full max-w-[908px] h-[444px] absolute left-[53px] top-[420px] z-[50] p-3 rounded-[32px] outline outline-1 outline-offset-[-1px] outline-[#7878801a] flex gap-3"
+    class="absolute left-[53px] top-[420px] z-[50] w-[908px]"
   >
-    
-    <div class="absolute inset-0 rounded-[32px] overflow-hidden z-0">
-      <div class="absolute inset-0 bg-blend-color-dodge bg-Backgrounds-Materials-Soft-02"></div>
-      <div class="absolute inset-0 backdrop-blur-md bg-white/0"></div>
-    </div>
-    
-    <div class="flex-1 flex flex-col justify-start items-start gap-3 relative z-10">
-      <div class="w-full px-3 pt-6 pb-3 bg-[#FFFFFF00] rounded-[20px] flex flex-col gap-4 relative overflow-hidden">
-        <div class="absolute inset-0 overflow-hidden">
-          <div class="absolute inset-0 bg-blend-color-dodge bg-white"></div>
-          <div class="absolute inset-0 bg-white/0 backdrop-blur-3xl"></div>
-        </div>
+    <!-- ВНУТРЕННИЙ БЛОК: скругление и glass-фон, overflow-hidden здесь -->
+    <div class="relative w-full rounded-[32px] overflow-hidden">
+      <!-- GLASS фон -->
+      <div class="absolute inset-0 pointer-events-none">
+        <!-- очень лёгкий серый градиент (≈5%) -->
+        <div
+          class="absolute inset-0 rounded-[32px]"
+          style="
+            background: linear-gradient(
+              135deg,
+              rgba(51,51,51,0.05) 0%,
+              rgba(166,166,166,0.05) 40%,
+              rgba(255,255,255,0.01) 100%
+            );
+          "
+        ></div>
+        <!-- белый слой + blur + лёгкий бордер -->
+        <div
+          class="absolute inset-0 rounded-[32px]
+                 backdrop-blur-xl bg-white/20
+                 border border-white/20
+                 shadow-[0_18px_60px_rgba(15,23,42,0.18)]"
+        ></div>
+      </div>
 
-        <div class="text-xl font-medium text-Labels-Neutral-Primary leading-tight z-10">
-          У тебя осталось 3 звонка
-        </div>
+      <!-- ВНУТРЕННИЙ LAYOUT: паддинги 12, две колонки 436 + 436 и gap 12 -->
+      <div class="relative z-10 w-full p-3">
+        <div class="grid w-full grid-cols-[436px_436px] gap-3">
+          <!-- ЛЕВАЯ КОЛОНКА -->
+          <div class="flex flex-col gap-3">
+            <!-- БЛОК: осталось звонков -->
+            <div
+              class="w-full rounded-[20px] border border-[#E5E7EB]
+                     bg-white px-6 py-6 flex flex-col gap-4"
+            >
+              <div class="text-[20px] leading-[20px] font-medium text-[#101012]">
+                У тебя осталось 3 звонка
+              </div>
 
-        <div class="w-full flex justify-between z-10">
-          <div class="flex items-center gap-1">
-            <div class="w-full max-w-4 h-4 relative">
-              <div class="w-full max-w-3.5 h-2.5 absolute left-[0.66px] top-[3.4px] bg-Labels-Neutral-Primary"></div>
+              <!-- 0 / 4 осталось с камерами -->
+              <div class="flex items-center justify-between text-[13px] leading-[16px]">
+                <!-- слева: чёрная камера + 0 -->
+                <div class="flex items-center gap-2 text-[#101012]">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path
+                      d="M7.765 3.402C9.201 3.402 10.365 4.567 10.365 6.003V9.997C10.365 11.433 9.201 12.598 7.765 12.598H3.265C1.829 12.598 0.665 11.433 0.665 9.997V6.003C0.665 4.567 1.829 3.402 3.265 3.402H7.765Z"
+                      fill="#101012"
+                    />
+                    <path
+                      d="M14.172 4.626C14.752 4.473 15.342 4.908 15.343 5.529V10.458C15.343 11.077 14.755 11.513 14.176 11.362L14.06 11.324L11.809 10.417C11.33 10.224 11.016 9.759 11.016 9.242V6.756C11.016 6.241 11.328 5.777 11.805 5.583L14.057 4.665L14.172 4.626Z"
+                      fill="#101012"
+                    />
+                  </svg>
+                  <span>0</span>
+                </div>
+
+                <!-- справа: серая камера + «4 осталось» -->
+                <div class="flex items-center gap-1 text-[rgba(60,60,67,0.72)]">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path
+                      d="M7.765 3.402C9.201 3.402 10.365 4.567 10.365 6.003V9.997C10.365 11.433 9.201 12.598 7.765 12.598H3.265C1.829 12.598 0.665 11.433 0.665 9.997V6.003C0.665 4.567 1.829 3.402 3.265 3.402H7.765Z"
+                      fill="#3C3C43" fill-opacity="0.7"
+                    />
+                    <path
+                      d="M14.172 4.626C14.752 4.473 15.342 4.908 15.343 5.529V10.458C15.343 11.077 14.755 11.513 14.176 11.362L14.06 11.324L11.809 10.417C11.33 10.224 11.016 9.759 11.016 9.242V6.756C11.016 6.241 11.328 5.777 11.805 5.583L14.057 4.665L14.172 4.626Z"
+                      fill="#3C3C43" fill-opacity="0.7"
+                    />
+                  </svg>
+                  <span>4 осталось</span>
+                </div>
+              </div>
+
+              <!-- чипы дат -->
+              <div class="mt-1 flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  class="h-8 px-3 rounded-lg bg-[#007AFF] text-white text-[12px] font-medium
+                         flex items-center justify-center"
+                >
+                  22 мая, 18:00
+                </button>
+                <button
+                  type="button"
+                  class="h-8 px-3 rounded-lg bg-[#F2F3F5]
+                         text-[12px] font-medium text-[rgba(60,60,67,0.72)]
+                         flex items-center justify-center"
+                >
+                  31 мая, 18:00
+                </button>
+                <button
+                  type="button"
+                  class="h-8 px-3 rounded-lg bg-[#F2F3F5]
+                         text-[12px] font-medium text-[rgba(60,60,67,0.72)]
+                         flex items-center justify-center"
+                >
+                  5 авг, 18:00
+                </button>
+                <button
+                  type="button"
+                  class="h-8 px-3 rounded-lg bg-[#007AFF]/10
+                         text-[12px] font-medium text-[#007AFF]
+                         flex items-center justify-center whitespace-nowrap"
+                >
+                  Назначить
+                </button>
+              </div>
             </div>
-            <span class="text-base text-Labels-Neutral-Primary">0</span>
+
+            <!-- БЛОК: запланированные звонки -->
+            <div
+              class="rounded-[20px] border border-[#E5E7EB]
+                     bg-white px-6 py-6 flex flex-col"
+            >
+              <div class="text-[20px] leading-[20px] font-medium text-[#101012] mb-6">
+                Запланированные звонки
+              </div>
+
+              <div class="space-y-7 text-[16px] leading-[24px] text-[#101012]">
+                <!-- 1: активный -->
+                <div class="flex gap-3">
+                  <div class="flex flex-col items-center">
+                    <span class="w-3 h-3 rounded-full bg-[#007AFF]"></span>
+                    <div class="timeline-line timeline-line--active"></div>
+                  </div>
+                  <div class="pt-[2px] font-medium">
+                    22 мая, 18:00
+                  </div>
+                </div>
+
+                <!-- 2 -->
+                <div class="flex gap-3">
+                  <div class="flex flex-col items-center">
+                    <span class="w-3 h-3 rounded-full bg-[#D4D4D8]"></span>
+                    <div class="timeline-line"></div>
+                  </div>
+                  <div class="pt-[2px] text-[rgba(60,60,67,0.72)]">
+                    31 мая, 19:00
+                  </div>
+                </div>
+
+                <!-- 3 -->
+                <div class="flex gap-3">
+                  <div class="flex flex-col items-center">
+                    <span class="w-3 h-3 rounded-full bg-[#D4D4D8]"></span>
+                    <div class="timeline-line"></div>
+                  </div>
+                  <div class="pt-[2px] text-[rgba(60,60,67,0.72)]">
+                    5 июня, 18:00
+                  </div>
+                </div>
+
+                <!-- 4: последний, без линии вниз -->
+                <div class="flex gap-3">
+                  <div class="flex flex-col items-center">
+                    <span class="w-3 h-3 rounded-full bg-[#D4D4D8]"></span>
+                  </div>
+                  <div class="pt-[2px] text-[rgba(60,60,67,0.72)]">
+                    11 июня, 20:00
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="flex items-center gap-1">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M7.765 3.402C9.201 3.402 10.365 4.567 10.365 6.003V9.997C10.365 11.433 9.201 12.598 7.765 12.598H3.265C1.829 12.598 0.665 11.433 0.665 9.997V6.003C0.665 4.567 1.829 3.402 3.265 3.402H7.765Z" fill="#3C3C43" fill-opacity="0.7"/>
-              <path d="M14.172 4.626C14.752 4.473 15.342 4.908 15.343 5.529V10.458C15.343 11.077 14.755 11.513 14.176 11.362L14.06 11.324L11.809 10.417C11.33 10.224 11.016 9.759 11.016 9.242V6.756C11.016 6.241 11.328 5.777 11.805 5.583L14.057 4.665L14.172 4.626Z" fill="#3C3C43" fill-opacity="0.7"/>
-            </svg>
-            <span class="text-base text-Labels-Neutral-Secondary/70">4 осталось</span>
-          </div>
-        </div>
-      
-        <div class="flex gap-1 w-full z-10">
-          <div class="flex-1 h-8 p-2 bg-blue-500 text-Labels-Static-Light-Primary text-xs font-medium rounded-lg flex justify-center items-center">
-            22 мая, 18:00
-          </div>
-          <div class="flex-1 h-8 px-3 py-1 bg-[#787880]/10 text-Labels-Neutral-Secondary/70 text-xs font-medium rounded-lg flex justify-center items-center">
-            31 мая, 18:00
-          </div>
-        <div class="flex-1 h-8 px-3 py-1 bg-[#787880]/10 text-Labels-Neutral-Secondary/70 text-xs font-medium rounded-lg flex justify-center items-center">
-            5 авг, 18:00
-          </div>
-          <div class="flex-1 h-8 px-3 py-1 bg-[#007AFF]/10 text-Labels-Brand-Primary text-xs font-medium rounded-lg flex justify-center items-center">
-            Назначить
+
+          <!-- ПРАВАЯ КОЛОНКА: календарь -->
+          <div
+            class="rounded-[20px] border border-[#E5E7EB]
+                   bg-white flex flex-col"
+          >
+            <div class="px-6 pt-2 pb-6 flex items-center justify-center">
+              <div class="w-full">
+                <!-- неделя + дни: сетка 55×55 -->
+                <div class="grid grid-cols-7 auto-rows-[55px] justify-items-center">
+                  <!-- заголовки дней недели -->
+                  <div
+                    v-for="w in weekdays"
+                    :key="'w-' + w"
+                    class="cal-weekday"
+                  >
+                    {{ w }}
+                  </div>
+
+                  <!-- дни -->
+                  <button
+                    v-for="(d, idx) in days"
+                    :key="'d-' + idx"
+                    type="button"
+                    class="cal-day"
+                    :class="[
+                      d.muted ? 'cal-day--muted' : '',
+                      d.selected ? 'cal-day--selected' : ''
+                    ]"
+                  >
+                    <!-- иконка статуса над числом -->
+                    <div class="cal-mark">
+                      <img
+                        v-if="d.done || d.deadline"
+                        :src="d.done ? doneIcon : deadlineIcon"
+                        class="w-4 h-4"
+                        alt=""
+                      />
+                    </div>
+
+                    <span>{{ d.label }}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      
-      <div class="w-full h-64 px-6 pt-6 bg-Backgrounds-Neutral-Tertiary rounded-[20px] flex flex-col justify-end gap-4 relative overflow-hidden">
-        <div class="absolute inset-0 bg-blend-color-dodge bg-white"></div>
-        <div class="absolute inset-0 backdrop-blur-3xl bg-white/0"></div>
+    </div>
 
-        <div class="absolute top-0 left-0 w-full px-6 pt-6 pb-9 bg-gradient-to-b from-Backgrounds-Overlay-Soft/20 to-Backgrounds-Overlay-Ghost/0 backdrop-blur-[2px] flex items-center">
-          <div class="text-xl font-medium text-Labels-Neutral-Primary">Запланированные звонки</div>
-        </div>
-       
-        <div class="relative z-10 mt-auto space-y-3">
-          <div class="flex gap-3">
-            <div class="flex flex-col items-center pt-1 gap-2">
-              <div class="size-3 bg-Labels-Brand-Primary rounded-full"></div>
-              <div class="w-full max-w-0 flex-1 outline outline-[3px] outline-offset-[-1.5px] outline-Labels-Brand-Primary"></div>
-            </div>
-            <div class="flex-1 pb-6">
-              <div class="text-base font-medium text-Labels-Neutral-Primary">22 мая, 18:00</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="w-full max-w-96 h-full bg-gray-50 rounded-[20px] flex justify-center items-center text-sm text-gray-400 z-10">
-      Здесь будет календарь
-    </div>
-   
-    <div
-      class="absolute left-1/2 -translate-x-1/2 -top-[28px] size-10 bg-white/50 backdrop-blur rounded-full flex items-center justify-center cursor-pointer z-[60]"
+    <!-- КНОПКА СВЕРНУТЬ: 40×40, наполовину наружу, один круг -->
+    <button
+      class="absolute left-1/2 -translate-x-1/2 -top-[20px]
+             w-10 h-10 rounded-full border border-[#787880]/[0.16]
+             bg-white/90 backdrop-blur
+             flex items-center justify-center
+             shadow-md cursor-pointer"
       @click="$emit('close')"
+      aria-label="Скрыть"
     >
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M5.24 9.123a.75.75 0 0 1 1.274 0l5.03 4.97a.75.75 0 0 0 1.064 0l4.97-4.97a.75.75 0 0 1 1.061 1.06l-4.97 4.97a2.25 2.25 0 0 1-3.182 0l-5.03-4.97a.75.75 0 0 1 0-1.06Z" fill="#3C3C43" fill-opacity="0.7"/>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M6 9l6 6 6-6"
+          stroke="#3C3C43"
+          stroke-opacity="0.72"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
       </svg>
-    </div>
+    </button>
   </div>
 </template>
+
+<script setup lang="ts">
+import doneIcon from '@/src/assets/icons/calendar/done.svg'        // синяя галка/круг
+import deadlineIcon from '@/src/assets/icons/calendar/deadline.svg' // оранжевые часы
+
+type DayCell = {
+  label: string
+  muted?: boolean
+  selected?: boolean
+  done?: boolean
+  deadline?: boolean
+}
+
+/** заголовки дней недели */
+const weekdays = ['Сб','Пн','Вт','Ср','Чт','Пт','Вс']
+
+/** статическая сетка как в макете */
+const days: DayCell[] = [
+  // ряд 1
+  { label: '28', muted: true },
+  { label: '29', muted: true },
+  { label: '30' },
+  { label: '1' },
+  { label: '2', done: true },
+  { label: '3' },
+  { label: '4', done: true },
+  // ряд 2
+  { label: '5', done: true },
+  { label: '6' },
+  { label: '7' },
+  { label: '8' },
+  { label: '9', done: true },
+  { label: '10' },
+  { label: '11', done: true },
+  // ряд 3
+  { label: '12' },
+  { label: '13' },
+  { label: '14' },
+  { label: '15', selected: true },
+  { label: '16' },
+  { label: '17' },
+  { label: '18' },
+  // ряд 4
+  { label: '19' },
+  { label: '20' },
+  { label: '21' },
+  { label: '22', deadline: true },
+  { label: '23' },
+  { label: '24' },
+  { label: '25' },
+  // ряд 5
+  { label: '26' },
+  { label: '27' },
+  { label: '28' },
+  { label: '29', deadline: true },
+  { label: '30' },
+  { label: '31', deadline: true },
+  { label: '1', muted: true },
+  // ряд 6
+  { label: '2', muted: true },
+  { label: '3', muted: true },
+  { label: '4', muted: true },
+  { label: '5', muted: true },
+  { label: '6', muted: true },
+  { label: '7', muted: true },
+  { label: '8', muted: true },
+]
+</script>
+
+<style scoped>
+/* календарь */
+.cal-weekday {
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 12px;
+  color: #a1a1aa;
+}
+
+.cal-day {
+  width: 55px;
+  height: 55px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cal-day span {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  color: #101012;
+}
+
+.cal-day--muted span {
+  color: #d4d4d8;
+}
+
+.cal-day--selected {
+  background: #101012;
+}
+
+.cal-day--selected span {
+  color: #ffffff;
+}
+
+/* контейнер под иконку, строго над числом */
+.cal-mark {
+  width: 16px;
+  height: 16px;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* вертикальная линия таймлайна слева — почти до следующего кружка, с отступом 8 */
+.timeline-line {
+  width: 2px;
+  flex: 1;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  background: #e5e7eb;
+  border-radius: 999px;
+}
+.timeline-line--active {
+  width: 3px;
+  background: #007aff;
+}
+</style>

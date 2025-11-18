@@ -14,4 +14,9 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2025-11-05',
   modules: ['@pinia/nuxt'],
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || '/api'
+    }
+  },
 })

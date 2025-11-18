@@ -23,11 +23,11 @@ export type Step3 = {
 }
 
 export type Step4 = {
-  // платежные поля — заполнишь позже
+  
 }
 
 export type AutoMentorDraft = {
-  id?: string;              // server draft id
+  id?: string;       
   updatedAt: number;
   step1: Step1;
   step2: Step2;
